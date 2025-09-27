@@ -1,4 +1,35 @@
-let num1, num2, operator;
+const displayContainer = document.querySelector('.js-display');
+
+let currentValue = '';
+let previousValue = '';
+let operator = '';
+let resultValue = '';
+let displayText = '';
+
+
+function appendValue(value) {
+  currentValue += value;
+  displayText += `${value}`;
+  displayContainer.textContent = displayText;
+}
+
+function appendOperator(oper) {
+  if(currentValue !== '' && previousValue !== '') {
+    resultValue = operate(currentValue, operator, previousValue);
+    previousValue = resultValue; 
+    currentValue = ''
+  }
+  
+  if(currentValue !== '') {
+    previousValue = currentValue;
+    currentValue = '';
+  }
+
+  operator = oper;
+  displayText += ` ${value} `;
+  displayContainer.textContent = displayText;
+}
+
 
 
 function operate(num1, operator, num2) {
@@ -23,7 +54,7 @@ function operate(num1, operator, num2) {
       break; 
   }
 
-  console.log(result);
+  return result;
 
 }
 
