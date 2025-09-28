@@ -6,15 +6,31 @@ let previousValue = '';
 let operator = '';
 let resultValue = '';
 let displayText = '';
+let justCalculated = false;
 
 
 function appendValue(value) {
+  if(justCalculated == true) {
+    currentValue = '';
+    displayText = '';
+    justCalculated = false;
+  }
   currentValue += value;
   displayText += `${value}`;
   displayContainer.textContent = displayText;
 }
 
 function appendOperator(oper) {
+
+  if(currentValue === '') {
+    displayText = displayText.trim().replace(/[\+\-\*\/]\s*$/, '');
+    operator = oper;
+    displayText += ` ${oper} `;
+    displayContainer.textContent = displayText;
+    return;
+  }
+
+
   if(currentValue !== '' && previousValue !== '') {
     resultValue = operate(Number(previousValue), operator, Number(currentValue));
     previousValue = resultValue; 
@@ -73,8 +89,8 @@ function mul(num1, num2) {
 }
 
 function div(num1, num2) {
-  if(num2 !== 0) return num1 / num2;
-  else 'ERROR';
+  if(num2 !== 0) return Number((num1 / num2).toFixed(6));
+  else return 0;
 }
 
 function calculate() {
@@ -84,6 +100,7 @@ function calculate() {
     currentValue = '';
     displayText = resultValue;
     displayContainer.textContent = displayText;
+    justCalculated = true;
   }
 }
 
