@@ -77,7 +77,24 @@ function div(num1, num2) {
   else 'ERROR';
 }
 
+function calculate() {
+  if(currentValue !== '' && previousValue !== '') {
+    resultValue = operate(Number(previousValue), operator, Number(currentValue));
+    previousValue = resultValue; 
+    currentValue = '';
+    displayText = resultValue;
+    displayContainer.textContent = displayText;
+  }
+}
 
+function clear() {
+  previousValue = ''
+  operator = '';
+  currentValue = '';
+  resultValue = '';
+  displayText = '';
+  displayContainer.textContent = '0';
+}
 
 document.querySelector('.zero').addEventListener('click', () => appendValue(0));
 document.querySelector('.one').addEventListener('click', () => appendValue(1));
