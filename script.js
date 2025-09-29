@@ -104,6 +104,20 @@ function calculate() {
   }
 }
 
+function undoLast() {
+  displayText = displayText.slice(0, -1);
+
+  if(currentValue) {
+    currentValue = currentValue.slice(0, -1);
+  }
+
+  if(!currentValue && /[+\-*/]$/.test(displayText.trim())) {
+    operator = '';    
+  }
+
+  displayContainer.textContent = displayText || '0';
+}
+
 function clear() {
   previousValue = ''
   operator = '';
@@ -132,3 +146,4 @@ document.querySelector('.divide').addEventListener('click', () => appendOperator
 
 document.querySelector('.equal').addEventListener('click', () => calculate());
 document.querySelector('.clear').addEventListener('click', () => clear());
+document.querySelector('.backspace').addEventListener('click', () => undoLast());
