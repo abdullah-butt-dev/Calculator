@@ -10,7 +10,7 @@ let justCalculated = false;
 
 
 function appendValue(value) {
-  if(justCalculated == true) {
+  if(justCalculated) {
     currentValue = '';
     displayText = '';
     justCalculated = false;
@@ -21,32 +21,42 @@ function appendValue(value) {
 }
 
 function appendOperator(oper) {
+  // If we just finished a calculation, keep the result in previousValue
+  if (justCalculated) {
+    justCalculated = false;
+    currentValue = ''; // result is already in previousValue
+  }
 
-  if(currentValue === '') {
-    displayText = displayText.trim().replace(/[\+\-\*\/]\s*$/, '');
+  // Case: no number yet, just change the operator
+  if (currentValue === '' && previousValue !== '') {
+    displayText = previousValue + ` ${oper} `;
     operator = oper;
-    displayText += ` ${oper} `;
     displayContainer.textContent = displayText;
     return;
   }
 
-
-  if(currentValue !== '' && previousValue !== '') {
-    resultValue = operate(Number(previousValue), operator, Number(currentValue));
-    previousValue = resultValue; 
+  // Case: user has typed both sides -> compute first
+  if (currentValue !== '' && previousValue !== '') {
+    resultValue = operate(Number(previousValue), operator, Number(currentValue)).toFixed(1);
+    previousValue = resultValue;
     currentValue = '';
     displayText = resultValue;
   }
-  
-  if(currentValue !== '') {
+
+  // Case: first operator after entering a number
+  if (currentValue !== '') {
     previousValue = currentValue;
     currentValue = '';
   }
 
   operator = oper;
-  displayText += ` ${oper} `;
+  displayText = previousValue + ` ${oper} `;
   displayContainer.textContent = displayText;
+
+  // Always reset dot button after an operator
+  document.querySelector('.dot').disabled = false;
 }
+
 
 
 
@@ -101,6 +111,7 @@ function calculate() {
     displayText = resultValue;
     displayContainer.textContent = displayText;
     justCalculated = true;
+    document.querySelector('.dot').disabled = false; 
   }
 }
 
@@ -124,6 +135,7 @@ function clear() {
   currentValue = '';
   resultValue = '';
   displayText = '';
+  document.querySelector('.dot').disabled = false;
   displayContainer.textContent = '0';
 }
 
@@ -147,3 +159,12 @@ document.querySelector('.divide').addEventListener('click', () => appendOperator
 document.querySelector('.equal').addEventListener('click', () => calculate());
 document.querySelector('.clear').addEventListener('click', () => clear());
 document.querySelector('.backspace').addEventListener('click', () => undoLast());
+document.querySelector('.dot').addEventListener('click', () => {
+  
+  const dotButton = document.querySelector('.dot');
+  
+  if(!currentValue.includes('.')) appendValue('.');
+
+  dotButton.disabled = currentValue.includes('.');
+
+})
