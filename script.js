@@ -168,3 +168,35 @@ document.querySelector('.dot').addEventListener('click', () => {
   dotButton.disabled = currentValue.includes('.');
 
 })
+
+document.addEventListener('keydown', (event) => {
+  const key = event.key;
+
+  if (!isNaN(key) && key !== ' ') {
+    appendValue(key);
+  }
+
+  if(key === '.') {
+    if(!currentValue.includes('.')) appendValue('.');
+
+    document.querySelector('.dot').disabled = currentValue.includes('.'); 
+  }
+
+  if(key === 'Backspace') {
+    undoLast();
+  }
+
+  if(key === 'Escape') {
+    clear();
+  }
+
+  if(key === 'Enter' || key === '=') {
+    event.preventDefault();
+    calculate();
+  }
+
+   if (['+', '-', '*', '/'].includes(key)) {
+    appendOperator(key);
+  }
+    
+})
