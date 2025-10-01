@@ -33,9 +33,39 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  
+}
+
+.rows {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 button {
-  padding: 5px 15px;
+  padding: 5px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #f3f5f6;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d2d2d2;
+}
+
+.clear {
+  padding: 5px 11px;
+}
+
+.dot, .backspace {
+  padding: 5px 22px;
+}
+
+.operation {
+  background-color: #e5edff;
+}
+
+.operation:hover {
+  background-color: #bdccf1;
 }

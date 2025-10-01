@@ -37,7 +37,7 @@ function appendOperator(oper) {
 
   // Case: user has typed both sides -> compute first
   if (currentValue !== '' && previousValue !== '') {
-    resultValue = operate(Number(previousValue), operator, Number(currentValue)).toFixed(1);
+    resultValue = operate(Number(previousValue), operator, Number(currentValue));
     previousValue = resultValue;
     currentValue = '';
     displayText = resultValue;
