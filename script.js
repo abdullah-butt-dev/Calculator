@@ -139,21 +139,15 @@ function clear() {
   displayContainer.textContent = '0';
 }
 
-document.querySelector('.zero').addEventListener('click', () => appendValue(0));
-document.querySelector('.one').addEventListener('click', () => appendValue(1));
-document.querySelector('.two').addEventListener('click', () => appendValue(2));
-document.querySelector('.three').addEventListener('click', () => appendValue(3));
-document.querySelector('.four').addEventListener('click', () => appendValue(4));
-document.querySelector('.five').addEventListener('click', () => appendValue(5));
-document.querySelector('.six').addEventListener('click', () => appendValue(6));
-document.querySelector('.seven').addEventListener('click', () => appendValue(7));
-document.querySelector('.eight').addEventListener('click', () => appendValue(8));
-document.querySelector('.nine').addEventListener('click', () => appendValue(9));
+document.querySelectorAll('.zero, .one, .two, .three, .four, .five, .six, .seven, .eight, .nine')
+  .forEach((btn) => {
+    btn.addEventListener('click', () => appendValue(btn.textContent));
+  });
 
-document.querySelector('.plus').addEventListener('click', () => appendOperator('+'));
-document.querySelector('.minus').addEventListener('click', () => appendOperator('-'));
-document.querySelector('.multiply').addEventListener('click', () => appendOperator('*'));
-document.querySelector('.divide').addEventListener('click', () => appendOperator('/'));
+document.querySelectorAll('.plus, .minus, .multiply, .divide')
+  .forEach((btn) => {
+    btn.addEventListener('click', () => appendOperator(btn.textContent));
+  });  
 
 
 document.querySelector('.equal').addEventListener('click', () => calculate());
